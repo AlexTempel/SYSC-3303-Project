@@ -3,8 +3,6 @@ public class Main {
         System.out.println("Hello world!");
         Scheduler skedge = new Scheduler();
         skedge.run();
-        Floor flor = new Floor(1);
-        flor.run();
         Elevator elev = new Elevator();
         elev.run();
     }
