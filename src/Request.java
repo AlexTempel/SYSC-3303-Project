@@ -3,12 +3,20 @@ public class Request {
     private final int starting_floor;
     private final int ending_floor;
 
+    private Boolean complete = false;
+
     public Request(int time, int starting_floor, int ending_floor) {
         this.time = time;
         this.starting_floor = starting_floor;
         this.ending_floor = ending_floor;
     }
 
+    public boolean getComplete() {
+        return complete;
+    }
+    public void finish() {
+        complete = true;
+    }
     public int getTime() {
         return time;
     }
