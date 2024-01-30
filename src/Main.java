@@ -3,5 +3,9 @@ public class Main {
         System.out.println("Hello world!");
         Scheduler sched = new Scheduler();
         sched.run();
+        Floor flor = new Floor(1);
+        flor.run();
+        Elevator elev = new Elevator();
+        elev.run();
     }
 }
