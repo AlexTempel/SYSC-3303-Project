@@ -53,8 +53,17 @@ public class Scheduler implements Runnable {
         notifyAll();
         return false;
     }
+
+    /**
+     * Checks if any of the outstanding requests to the elevator are complete yet
+     * If so remove them from the outstanding request arraylist
+     */
+    private synchronized void checkOutstanding() {
+        outstandingRequests.removeIf(Request::getComplete);
+    }
     public void run() {
         while (true) {
+            checkOutstanding();
             if (floorRequestCheck()) {
                 handleFloorRequest();
             }
