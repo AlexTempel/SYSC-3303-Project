@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<Request> requests = FloorSubsystem.readCSV("Input.csv");
+        Scheduler schekde = new Scheduler(null, null);
         for (Request r : requests) {
             LocalTime time = r.getTime();
             LocalTime currTime = LocalTime.now();

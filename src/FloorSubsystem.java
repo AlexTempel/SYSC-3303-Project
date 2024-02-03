@@ -7,6 +7,7 @@ public class FloorSubsystem implements Runnable {
 
     ArrayList<Floor> listOfFloors;
     ArrayList<Request> listOfRequests;
+    Request currRequest;
 
     FloorSubsystem(int numberOfFloors) {
         listOfFloors = new ArrayList<>();
@@ -14,6 +15,7 @@ public class FloorSubsystem implements Runnable {
             listOfFloors.add(new Floor(i+1));
         }
         listOfRequests = readCSV("Input.csv");
+        currRequest = null;
     }
 
     public static ArrayList<Request> readCSV(String csvName) {
@@ -48,8 +50,7 @@ public class FloorSubsystem implements Runnable {
             for (Request r : listOfRequests) {
                 boolean requestNow = checkTime(r.getTime(), LocalTime.now());
                 if (requestNow){
-                    //send request to scheduler
-                   // Scheduler.requestBufferFloor(r);
+                   currRequest = r;
                 }
             }
 
