@@ -22,7 +22,11 @@ public class Elevator implements Runnable{
     public void run() {
         while(true){
             if (requestBuffer != null){
-                handleRequest();
+                try {
+                    handleRequest();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -30,15 +34,14 @@ public class Elevator implements Runnable{
     /**
      * Move the elevator from its current floor to the destination floor
      * @param destination ending floor
+     * @throws InterruptedException
      */
-    private void moveElevator(int destination){
+    private void moveElevator(int destination) throws InterruptedException {
         // Check how many floors elevator needs to travel
         int floorDifference = Math.abs(current_floor - destination);
         for(int i = floorDifference; i > 0; i--){
             System.out.printf("Elevator %d needs to travel %d floors to reach destination\n", elevator_id, i);
-            try {
-                Thread.sleep(1000); // Simulate travel time
-            }catch(InterruptedException e){}
+            Thread.sleep(1000); // Simulate travel time
         }
         // Complete the trip
         current_floor = destination;
@@ -46,8 +49,9 @@ public class Elevator implements Runnable{
 
     /**
      * Moves the elevator to the starting floor, then to the destination floor
+     * @throws InterruptedException
      */
-    private synchronized void handleRequest(){
+    private synchronized void handleRequest() throws InterruptedException {
         int startingFloor = requestBuffer.getStarting_floor();
         int endingFloor = requestBuffer.getEnding_floor();
 

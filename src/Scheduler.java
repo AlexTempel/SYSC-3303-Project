@@ -51,6 +51,7 @@ public class Scheduler implements Runnable {
     private synchronized boolean sendRequestElevator(Request request) {
         if (request != null && requestBufferElevator == null) {
             requestBufferElevator = request;
+            System.out.println("Sent Request to Elevator");
             notifyAll();
             return true;
         }
@@ -69,6 +70,7 @@ public class Scheduler implements Runnable {
         while (true) {
             checkOutstanding();
             if (floorRequestCheck()) {
+                System.out.println("Received Request from floor");
                 handleFloorRequest();
             }
         }
