@@ -17,3 +17,12 @@ sequence of events
 
 Files used - input.csv, FloorSubSystem.java, Request.java,
              Elevator.java, Scheduler.java, Floor.java
+
+Responsibilities Breakdown:
+Alex: Scheduler, Forwarding Request to elevator, For
+Nick K.: Elevator class, confirmation in response to request from the floor,
+         request from floor, send confirmation response to floor
+Jake: Floor subsystem, request to scheduler, receive confirmation response,
+      mark as done and print msg for completed request
+Peter: UML Class and Sequence Diagram - help with CSV reader
+Nik N.: Read input CSV file and create requests
