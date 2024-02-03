@@ -74,14 +74,21 @@ public class FloorSubsystem implements Runnable {
         notifyAll();
     }
 
+    /**
+     * Checks each request in the list of requests from the input csv file
+     *
+     */
+    private synchronized void checkRequest(){
+        for (Request r : listOfRequests) {
+            boolean requestNow = checkTime(r.getTime(), LocalTime.now());
+            if (requestNow){
+                sendRequest(r);
+            }
+        }
+    }
     public void run() {
         while(true){
-            for (Request r : listOfRequests) {
-                boolean requestNow = checkTime(r.getTime(), LocalTime.now());
-                if (requestNow){
-                   sendRequest(r);
-                }
-            }
+            checkRequest();
         }
     }
 }
