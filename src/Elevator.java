@@ -20,7 +20,7 @@ public class Elevator implements Runnable{
     /**
      * Attempt to complete the request when the buffer is full
      */
-    public synchronized void run() {
+    public void run() {
         while(true){
             if (requestBuffer != null){
                 try {
@@ -52,7 +52,7 @@ public class Elevator implements Runnable{
      * Moves the elevator to the starting floor, then to the destination floor
      * @throws InterruptedException
      */
-    private void handleRequest() throws InterruptedException {
+    private synchronized void handleRequest() throws InterruptedException {
         int startingFloor = requestBuffer.getStarting_floor();
         int endingFloor = requestBuffer.getEnding_floor();
 
@@ -64,6 +64,6 @@ public class Elevator implements Runnable{
         moveElevator(endingFloor);
         requestBuffer.finish();
         requestBuffer = null;
-
+        notifyAll();
     }
 }

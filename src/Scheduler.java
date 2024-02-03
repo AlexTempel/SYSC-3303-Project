@@ -32,7 +32,11 @@ public class Scheduler implements Runnable {
      */
     private synchronized void handleFloorRequest() {
         if (requestBufferFloor != null) {
-            while(!sendRequestElevator(requestBufferFloor)); //Keep trying to send request to elevator, if it fails (returns false) try again
+            while(!sendRequestElevator(requestBufferFloor)) { //Keep trying to send request to elevator, if it fails (returns false) try again
+                try {
+                    wait();
+                } catch (InterruptedException e) {}
+            }
             outstandingRequests.add(requestBufferFloor);
             requestBufferFloor = null;
         }
