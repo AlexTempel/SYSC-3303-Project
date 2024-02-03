@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 public class FloorSubsystem implements Runnable {
 
@@ -17,7 +19,7 @@ public class FloorSubsystem implements Runnable {
     }
 
     public static ArrayList<Request> readCSV(String csvName) {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss.S");
+        //SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss.S");
         ArrayList<Request> toReturn = new ArrayList<Request>();
         try {
             FileReader file = new FileReader(csvName);
@@ -27,7 +29,7 @@ public class FloorSubsystem implements Runnable {
             while(line != null){
                 line = input.readLine();
                 String[] values = line.split(" ");
-                Request newRequest = new Request(format.parse(values[0]),
+                Request newRequest = new Request(LocalTime.parse(values[0]),
                         Integer.parseInt(values[1]),
                         values[2],
                         Integer.parseInt(values[3]));
@@ -37,7 +39,22 @@ public class FloorSubsystem implements Runnable {
         } catch(Exception e) { e.getStackTrace(); }
         return toReturn;
     }
-    public void run() {
 
+    public boolean checkTime(LocalTime reqTime, LocalTime currTime){
+        int result = reqTime.compareTo(currTime);
+        return result == 0;
+
+    }
+    public void run() {
+        while(true){
+            for (Request r : listOfRequests) {
+                boolean requestNow = checkTime(r.getTime().truncatedTo(ChronoUnit.MINUTES),
+                                    LocalTime.now().truncatedTo(ChronoUnit.MINUTES));
+                if (requestNow){
+                    //send request to scheduler
+                }
+            }
+
+        }
     }
 }
