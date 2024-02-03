@@ -1,7 +1,6 @@
 import java.lang.Math;
 
 public class Elevator implements Runnable{
-
     private int current_floor;
     private Request requestBuffer;
     private final int elevator_id;
