@@ -70,6 +70,7 @@ public class FloorSubsystem implements Runnable {
         }
         currRequest = request;
         listOfRequests.remove(request);
+        System.out.println("Sent request to Scheduler");
         notifyAll();
     }
 
