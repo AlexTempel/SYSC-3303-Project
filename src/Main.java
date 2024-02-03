@@ -10,5 +10,9 @@ public class Main {
         FloorSubsystem floorSubsystem = new FloorSubsystem(22, floorbuffer);
         Scheduler scheduler = new Scheduler(floorbuffer, elevatorbuffer);
         Elevator elevator = new Elevator(1, elevatorbuffer);
+
+        floorSubsystem.run();
+        scheduler.run();
+        elevator.run();
     }
 }
