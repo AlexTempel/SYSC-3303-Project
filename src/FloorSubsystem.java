@@ -48,13 +48,18 @@ public class FloorSubsystem implements Runnable {
         return result >= 0;
     }
 
+    private synchronized void sendRequest(Request request) {
+        while(currRequest != null){};
+        currRequest = request;
+        notifyAll();
+    }
 
     public void run() {
         while(true){
             for (Request r : listOfRequests) {
                 boolean requestNow = checkTime(r.getTime(), LocalTime.now());
                 if (requestNow){
-                   currRequest = r;
+                   sendRequest(r);
                 }
             }
 
