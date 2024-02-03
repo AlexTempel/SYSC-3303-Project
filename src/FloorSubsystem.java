@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 
 public class FloorSubsystem implements Runnable {
 
@@ -42,14 +40,13 @@ public class FloorSubsystem implements Runnable {
 
     public boolean checkTime(LocalTime reqTime, LocalTime currTime){
         int result = reqTime.compareTo(currTime);
-        return result == 0;
+        return result == 0 || result > 0;
 
     }
     public void run() {
         while(true){
             for (Request r : listOfRequests) {
-                boolean requestNow = checkTime(r.getTime().truncatedTo(ChronoUnit.MINUTES),
-                                    LocalTime.now().truncatedTo(ChronoUnit.MINUTES));
+                boolean requestNow = checkTime(r.getTime(), LocalTime.now());
                 if (requestNow){
                     //send request to scheduler
                 }
