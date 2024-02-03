@@ -5,22 +5,11 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<Request> requests = FloorSubsystem.readCSV("Input.csv");
-        Scheduler schekde = new Scheduler(null, null);
-        for (Request r : requests) {
-            LocalTime time = r.getTime();
-            LocalTime currTime = LocalTime.now();
-            System.out.println(time);
-            System.out.println(r.getEnding_floor());
-            System.out.println("CUrrent time: " + currTime);
+        Request floorBuffer = null;
+        Request elevatorBuffer = null;
+        Scheduler sched = new Scheduler(elevatorBuffer, floorBuffer);
+        FloorSubsystem flo = new FloorSubsystem(12, floorBuffer);
 
-            if (currTime.compareTo(time) >= 0 ){
-                System.out.println("It works");
-            }
-            else {
-                System.out.println("It don't work");
-            }
-        }
-
+        floorBuffer = new Request(LocalTime.now(), 5, "up", 7);
     }
 }
