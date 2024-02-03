@@ -85,6 +85,7 @@ public class FloorSubsystem implements Runnable {
                 sendRequest(r);
             }
         }
+        notifyAll();
     }
     public void run() {
         while(true){
