@@ -64,7 +64,11 @@ public class FloorSubsystem implements Runnable {
      * @param request the request to check the time of
      */
     private synchronized void sendRequest(Request request) {
-        while(currRequest != null){};
+        while(currRequest != null){
+            try {
+                wait();
+            } catch (InterruptedException e) {};
+        };
         currRequest = request;
         listOfRequests.remove(request);
         notifyAll();
