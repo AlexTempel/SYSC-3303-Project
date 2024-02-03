@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.SimpleDateFormat;
 
 public class FloorSubsystem implements Runnable {
 
@@ -13,8 +16,26 @@ public class FloorSubsystem implements Runnable {
         listOfRequests = readCSV("Input.csv");
     }
 
-    private static ArrayList<Request> readCSV(String csvName) {
-        return new ArrayList<>(); //Temp return, put actual implementation in later
+    public static ArrayList<Request> readCSV(String csvName) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss.S");
+        ArrayList<Request> toReturn = new ArrayList<Request>();
+        try {
+            FileReader file = new FileReader(csvName);
+            BufferedReader input = new BufferedReader(file);
+            String line = input.readLine();
+
+            while(line != null){
+                line = input.readLine();
+                String[] values = line.split(" ");
+                Request newRequest = new Request(format.parse(values[0]),
+                        Integer.parseInt(values[1]),
+                        values[2],
+                        Integer.parseInt(values[3]));
+                toReturn.add(newRequest);
+            }
+            input.close();
+        } catch(Exception e) { e.getStackTrace(); }
+        return toReturn;
     }
     public void run() {
 
