@@ -68,7 +68,7 @@ public class FloorSubsystem implements Runnable {
             try {
                 wait();
             } catch (InterruptedException e) {};
-        };
+        }
         currRequest = request;
         listOfRequests.remove(request);
         notifyAll();
