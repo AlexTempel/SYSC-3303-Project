@@ -7,8 +7,8 @@ public class Main {
         Request floorbuffer = null;
         Request elevatorbuffer = null;
 
-        FloorSubsystem floorSubsystem = new FloorSubsystem();
-        Scheduler scheduler = new Scheduler();
-        Elevator elevator = new Elevator();
+        FloorSubsystem floorSubsystem = new FloorSubsystem(22, floorbuffer);
+        Scheduler scheduler = new Scheduler(floorbuffer, elevatorbuffer);
+        Elevator elevator = new Elevator(1, elevatorbuffer);
     }
 }
