@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 
-LocalTime
+
 class ElevatorTest {
     @Test
     void test(){
