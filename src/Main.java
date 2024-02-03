@@ -13,7 +13,7 @@ public class Main {
             System.out.println(r.getEnding_floor());
             System.out.println("CUrrent time: " + currTime);
 
-            if (currTime.compareTo(time) == 0 || currTime.compareTo(time) > 0 ){
+            if (currTime.compareTo(time) >= 0 ){
                 System.out.println("It works");
             }
             else {

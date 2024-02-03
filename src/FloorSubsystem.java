@@ -40,8 +40,8 @@ public class FloorSubsystem implements Runnable {
 
     public boolean checkTime(LocalTime reqTime, LocalTime currTime){
         int result = reqTime.compareTo(currTime);
-        return result == 0 || result > 0;
-
+        notifyAll();
+        return result >= 0;
     }
     public void run() {
         while(true){
@@ -49,6 +49,7 @@ public class FloorSubsystem implements Runnable {
                 boolean requestNow = checkTime(r.getTime(), LocalTime.now());
                 if (requestNow){
                     //send request to scheduler
+                   // Scheduler.requestBufferFloor(r);
                 }
             }
 
