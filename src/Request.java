@@ -1,6 +1,4 @@
-import java.time.format.DateTimeFormatter;
 import java.time.LocalTime;
-import java.util.Date;
 
 public class Request {
     //private Date time;
@@ -25,6 +23,7 @@ public class Request {
 
     public void finish() {
         complete = true;
+        System.out.println("Request to go from floor: " + floor + " to floor: " + car_button + " going " + floor_button + "wards");
     }
 
     public LocalTime getTime() {
