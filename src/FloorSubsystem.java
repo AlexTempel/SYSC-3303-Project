@@ -82,7 +82,6 @@ public class FloorSubsystem implements Runnable {
                    sendRequest(r);
                 }
             }
-
         }
     }
 }
