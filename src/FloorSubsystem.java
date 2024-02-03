@@ -55,7 +55,6 @@ public class FloorSubsystem implements Runnable {
      */
     private boolean checkTime(LocalTime reqTime, LocalTime currTime){
         int result = reqTime.compareTo(currTime);
-        notifyAll();
         return result >= 0;
     }
 
