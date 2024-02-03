@@ -3,7 +3,8 @@ import java.time.LocalTime;
 import java.util.Date;
 
 public class Request {
-    private Date time;
+    //private Date time;
+    private LocalTime time; //changed all type Data to LocalTime
     //private int time; //hh:mm:ss.mmm
     private final int floor;
     private final int car_button;
@@ -11,7 +12,7 @@ public class Request {
 
     private Boolean complete = false;
 
-    public Request(Date time, int floor, String floor_button, int car_button) {
+    public Request(LocalTime time, int floor, String floor_button, int car_button) {
         this.time = time;
         this.floor = floor;
         this.floor_button = floor_button;
@@ -26,7 +27,7 @@ public class Request {
         complete = true;
     }
 
-    public Date getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
@@ -38,7 +39,7 @@ public class Request {
         return car_button;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 }
