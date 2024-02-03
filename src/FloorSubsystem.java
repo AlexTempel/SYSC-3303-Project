@@ -9,13 +9,15 @@ public class FloorSubsystem implements Runnable {
     ArrayList<Request> listOfRequests;
     Request currRequest;
 
-    FloorSubsystem(int numberOfFloors) {
+    FloorSubsystem(int numberOfFloors, Request buffer) {
         listOfFloors = new ArrayList<>();
         for (int i = 0; i < numberOfFloors; i++) {
             listOfFloors.add(new Floor(i+1));
         }
         listOfRequests = readCSV("Input.csv");
         currRequest = null;
+
+        currRequest = buffer;
     }
 
     public static ArrayList<Request> readCSV(String csvName) {
@@ -40,11 +42,13 @@ public class FloorSubsystem implements Runnable {
         return toReturn;
     }
 
-    public boolean checkTime(LocalTime reqTime, LocalTime currTime){
+    private boolean checkTime(LocalTime reqTime, LocalTime currTime){
         int result = reqTime.compareTo(currTime);
         notifyAll();
         return result >= 0;
     }
+
+
     public void run() {
         while(true){
             for (Request r : listOfRequests) {
