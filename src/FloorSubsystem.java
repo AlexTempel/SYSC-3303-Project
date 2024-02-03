@@ -5,9 +5,9 @@ import java.time.LocalTime;
 
 public class FloorSubsystem implements Runnable {
 
-    ArrayList<Floor> listOfFloors;
-    ArrayList<Request> listOfRequests;
-    Request currRequest;
+    private ArrayList<Floor> listOfFloors;
+    private ArrayList<Request> listOfRequests;
+    private Request currRequest;
 
     FloorSubsystem(int numberOfFloors, Request buffer) {
         listOfFloors = new ArrayList<>();

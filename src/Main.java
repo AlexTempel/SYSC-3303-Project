@@ -10,7 +10,6 @@ public class Main {
         Scheduler sched = new Scheduler(elevatorBuffer, floorBuffer);
         FloorSubsystem flo = new FloorSubsystem(12, floorBuffer);
 
-
-
+        floorBuffer = new Request(LocalTime.now(), 5, "up", 7);
     }
 }
