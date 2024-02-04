@@ -17,10 +17,6 @@ public class FloorSubsystem implements Runnable {
             listOfFloors.add(new Floor(i+1));
         }
         listOfRequests = readCSV("Input.csv");
-        System.out.println("Size of list of Requests" + listOfRequests.size());
-        for (Request r : listOfRequests) {
-            System.out.println(r.toString());
-        }
 
         currRequest = buffer;
         listOfSentRequests = new ArrayList<>();
@@ -143,7 +139,7 @@ public class FloorSubsystem implements Runnable {
         }
 
          */
-        hardcodedRequests();
+        //hardcodedRequests();
         while (true) {
             basicFunctionality();
         }
