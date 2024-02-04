@@ -106,7 +106,7 @@ public class FloorSubsystem implements Runnable {
 
     private Request currRequest(){
         for (Request r : listOfRequests) {
-            if (r.getTime().truncatedTo(ChronoUnit.MINUTES) == LocalTime.now().truncatedTo(ChronoUnit.MINUTES)) {
+            if (r.getTime().truncatedTo(ChronoUnit.MINUTES).compareTo(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)) == 0) {
                 return r;
             }
         }
