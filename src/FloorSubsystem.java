@@ -93,11 +93,11 @@ public class FloorSubsystem implements Runnable {
         System.out.println("Starting Floor Subsystem");
         while(true){
             checkRequest();
-            if (!listOfSentRequests.isEmpty()) {
-                for (Request r : listOfSentRequests) {
-                    listOfRequests.remove(r);
-                }
-            }
+            //if (!listOfSentRequests.isEmpty()) {
+                //for (Request r : listOfSentRequests) {
+                //    listOfRequests.remove(r);
+                //}
+            //}
         }
     }
 }

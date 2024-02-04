@@ -16,6 +16,8 @@ public class Elevator implements Runnable{
         current_floor = 1; //start the Elevator at the ground floor
     }
 
+    
+
     /**
      * Attempt to complete the request when the buffer is full
      */
