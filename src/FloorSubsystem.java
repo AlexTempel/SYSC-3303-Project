@@ -58,7 +58,7 @@ public class FloorSubsystem implements Runnable {
                 return r;
             }
         }
-        try {
+        try { //Wait half a second and check again
             Thread.sleep(500);
         } catch (Exception e) {}
         return currRequest();
@@ -67,7 +67,7 @@ public class FloorSubsystem implements Runnable {
     /**
      * Assigns the next current request to send to the scheduler and notifies when complete
      */
-    private synchronized void basicFunctionality() {
+    private synchronized void fulfillBuffer() {
         if (currRequest[0] == null) {
             Request temp_request = currRequest();
 
@@ -82,7 +82,7 @@ public class FloorSubsystem implements Runnable {
 
     public void run() {
         while (true) {
-            basicFunctionality();
+            fulfillBuffer();
         }
     }
 }

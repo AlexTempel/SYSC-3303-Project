@@ -14,7 +14,7 @@ public class Scheduler implements Runnable {
      * If there is a request in the floor buffer and no request in the elevator buffer
      * Put the floor buffer's request in the elevator buffer
      */
-    private synchronized void basicFunctionality() {
+    private synchronized void communicate() {
         if (requestBufferFloor[0] != null && requestBufferElevator[0] == null) {
             requestBufferElevator[0] = requestBufferFloor[0];
             requestBufferFloor[0] = null;
@@ -26,7 +26,7 @@ public class Scheduler implements Runnable {
     public void run() {
         System.out.println("Starting Scheduler");
         while (true) {
-            basicFunctionality();
+            communicate();
         }
     }
 }
