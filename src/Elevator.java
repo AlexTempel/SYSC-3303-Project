@@ -63,8 +63,6 @@ public class Elevator implements Runnable{
         moveElevator(endingFloor);
         requestBuffer[0].finish();
         requestBuffer[0] = null;
-        System.out.println("The Elevator buffer is set to completed");
-        System.out.println("The elevator buffer is null: " + (requestBuffer[0] == null));
         notifyAll();
     }
 }
