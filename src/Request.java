@@ -41,4 +41,8 @@ public class Request {
     public void setTime(LocalTime time) {
         this.time = time;
     }
+
+    public String toString() {
+        return ("" + time.toString() + " " + floor + " " + floor_button + " " + car_button);
+    }
 }
