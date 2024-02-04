@@ -10,6 +10,10 @@ Rest of the files currently do not have functionality.
 Input.CSV gets parsed and becomes the requests that are sent from the Floor Subsystem to the Scheduler to the elevator
 generate input.py is used to create a new Input.CSV with random requests
 
+Instructions:
+Run Main.java to run the program
+Use generate input.py to create a new Input.csv file with random requests
+
 sequence of events
 
 1 - floor subsystem reads input csv and creates a list of requests ( in format )
