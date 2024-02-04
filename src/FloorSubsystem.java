@@ -65,6 +65,7 @@ public class FloorSubsystem implements Runnable {
     }
 
     /**
+     * Provides the functionality for the Floor Subsystem
      * Assigns the next current request to send to the scheduler and notifies when complete
      */
     private synchronized void fulfillBuffer() {
