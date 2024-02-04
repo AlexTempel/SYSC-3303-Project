@@ -99,7 +99,8 @@ public class FloorSubsystem implements Runnable {
 
     private synchronized void basicFunctionality() {
         if (currRequest[0] == null) {
-            currRequest[0] = listOfRequests.get(0);
+            currRequest[0] = listOfRequests.remove(0);
+
         }
         notifyAll();
     }
