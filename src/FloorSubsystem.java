@@ -51,7 +51,7 @@ public class FloorSubsystem implements Runnable {
      * request from the list and return the request
      * @return r the request from the input file that has the same time as the current time
      */
-    private Request currRequest(){
+    private Request getCurrentRequest(){
         for (Request r : listOfRequests) {
             if (r.getTime().truncatedTo(ChronoUnit.MINUTES).compareTo(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)) == 0) {
                 listOfRequests.remove(r);
@@ -70,7 +70,7 @@ public class FloorSubsystem implements Runnable {
      */
     private synchronized void fulfillBuffer() {
         if (currRequest[0] == null) {
-            Request temp_request = currRequest();
+            Request temp_request = getCurrentRequest();
 
             if (temp_request != null) {
                 currRequest[0] = temp_request;
