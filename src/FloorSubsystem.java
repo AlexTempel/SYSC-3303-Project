@@ -89,7 +89,23 @@ public class FloorSubsystem implements Runnable {
         }
         notifyAll();
     }
+
+    private void hardcodedRequests() {
+        listOfRequests = new ArrayList<>();
+        listOfRequests.add(new Request(LocalTime.now(), 2, "Up", 10));
+        listOfRequests.add(new Request(LocalTime.now(), 8, "Down", 2));
+        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
+    }
+
+    private synchronized void basicFunctionality() {
+        if (currRequest[0] == null) {
+            currRequest[0] = listOfRequests.get(0);
+        }
+        notifyAll();
+    }
+
     public void run() {
+        /*
         System.out.println("Starting Floor Subsystem");
         while(true){
             checkRequest();
@@ -99,5 +115,12 @@ public class FloorSubsystem implements Runnable {
                 //}
             //}
         }
+
+         */
+        hardcodedRequests();
+        while (true) {
+            basicFunctionality();
+        }
+
     }
 }
