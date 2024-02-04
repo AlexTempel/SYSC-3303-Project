@@ -1,3 +1,4 @@
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,16 +8,14 @@ public class FloorSubsystem implements Runnable {
 
     private ArrayList<Floor> listOfFloors;
     private ArrayList<Request> listOfRequests;
-    private Request currRequest;
+    private Request[] currRequest;
 
-    FloorSubsystem(int numberOfFloors, Request buffer) {
+    FloorSubsystem(int numberOfFloors, Request[] buffer) {
         listOfFloors = new ArrayList<>();
         for (int i = 0; i < numberOfFloors; i++) {
             listOfFloors.add(new Floor(i+1));
         }
         listOfRequests = readCSV("Input.csv");
-        currRequest = null;
-
         currRequest = buffer;
     }
 
@@ -48,40 +47,43 @@ public class FloorSubsystem implements Runnable {
     }
 
     /**
-     * Checks if the request time is the current time
-     * @param reqTime the time of the request
-     * @param currTime the current clock time
-     * @return if the time is exactly the same or if the currTime has passed the reqTime
+     * Loops through the listOfRequests and checks if they are scheduled for the current time, if so remove the
+     * request from the list and return the request
+     * @return r the request from the input file that has the same time as the current time
      */
-    private boolean checkTime(LocalTime reqTime, LocalTime currTime){
-        int result = reqTime.compareTo(currTime);
-        notifyAll();
-        return result >= 0;
+    private Request getCurrentRequest(){
+        for (Request r : listOfRequests) {
+            if (r.getTime().truncatedTo(ChronoUnit.MINUTES).compareTo(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)) == 0) {
+                listOfRequests.remove(r);
+                return r;
+            }
+        }
+        try { //Wait half a second and check again
+            Thread.sleep(500);
+        } catch (Exception e) {}
+        return getCurrentRequest();
     }
 
     /**
-     * Sets shared variable to request to be sent and removes request from list so that the request isn't repeated
-     * @param request the request to check the time of
+     * Provides the functionality for the Floor Subsystem
+     * Assigns the next current request to send to the scheduler and notifies when complete
      */
-    private synchronized void sendRequest(Request request) {
-        while(currRequest != null){
-            try {
-                wait();
-            } catch (InterruptedException e) {};
+    private synchronized void fulfillBuffer() {
+        if (currRequest[0] == null) {
+            Request temp_request = getCurrentRequest();
+
+            if (temp_request != null) {
+                currRequest[0] = temp_request;
+                System.out.println("Sent to Scheduler");
+                System.out.println("Sent: " + temp_request.toString());
+            }
         }
-        currRequest = request;
-        listOfRequests.remove(request);
         notifyAll();
     }
 
     public void run() {
-        while(true){
-            for (Request r : listOfRequests) {
-                boolean requestNow = checkTime(r.getTime(), LocalTime.now());
-                if (requestNow){
-                   sendRequest(r);
-                }
-            }
+        while (true) {
+            fulfillBuffer();
         }
     }
 }
