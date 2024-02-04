@@ -91,8 +91,10 @@ public class FloorSubsystem implements Runnable {
     public void run() {
         while(true){
             checkRequest();
-            for (Request r : listOfSentRequests) {
-                listOfRequests.remove(r);
+            if (listOfSentRequests != null) {
+                for (Request r : listOfSentRequests) {
+                    listOfRequests.remove(r);
+                }
             }
         }
     }
