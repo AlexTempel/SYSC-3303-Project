@@ -19,8 +19,8 @@ with open("Input.csv", 'a') as file:
         if rand_direction == "Up":
             rand_end_floor = str(random.randrange(int(rand_starting_floor), 22))
         else:
-            rand_end_floor = str(random.randrange(1, int(rand_starting_floor)))
+            rand_end_floor = str(random.randrange(1, int(rand_starting_floor )))
         
         file.write(rand_hours + ":" + rand_minute + ":" + rand_second + ".0" + " " + rand_starting_floor + " " + rand_direction + " " + rand_end_floor + "\n")
 
-file.close()
+    file.close()
