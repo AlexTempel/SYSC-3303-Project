@@ -95,12 +95,22 @@ public class FloorSubsystem implements Runnable {
         listOfRequests.add(new Request(LocalTime.now(), 2, "Up", 10));
         listOfRequests.add(new Request(LocalTime.now(), 8, "Down", 2));
         listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
+        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
+        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
+        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
+        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
+        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
+        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
     }
 
     private synchronized void basicFunctionality() {
         if (currRequest[0] == null) {
-            currRequest[0] = listOfRequests.remove(0);
-
+            Request temp_request = listOfRequests.removeFirst();
+            if (temp_request != null) {
+                currRequest[0] = temp_request;
+                System.out.println("Sent to Scheduler");
+                System.out.println("Sent: " + temp_request.toString());
+            }
         }
         notifyAll();
     }
