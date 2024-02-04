@@ -19,6 +19,7 @@ public class FloorSubsystem implements Runnable {
         currRequest = null;
 
         currRequest = buffer;
+        listOfSentRequests = new ArrayList<>();
     }
 
     /**
@@ -91,7 +92,7 @@ public class FloorSubsystem implements Runnable {
     public void run() {
         while(true){
             checkRequest();
-            if (listOfSentRequests != null) {
+            if (!listOfSentRequests.isEmpty()) {
                 for (Request r : listOfSentRequests) {
                     listOfRequests.remove(r);
                 }
