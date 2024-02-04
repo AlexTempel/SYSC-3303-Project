@@ -61,7 +61,7 @@ public class FloorSubsystem implements Runnable {
         try { //Wait half a second and check again
             Thread.sleep(500);
         } catch (Exception e) {}
-        return currRequest();
+        return getCurrentRequest();
     }
 
     /**
