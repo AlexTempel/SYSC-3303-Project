@@ -7,7 +7,6 @@ public class Request {
     private final int floor;
     private final int car_button;
     private final String floor_button;
-
     private Boolean complete = false;
 
     public Request(LocalTime time, int floor, String floor_button, int car_button) {

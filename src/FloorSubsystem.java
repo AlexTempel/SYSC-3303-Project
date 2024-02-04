@@ -9,7 +9,6 @@ public class FloorSubsystem implements Runnable {
     private ArrayList<Floor> listOfFloors;
     private ArrayList<Request> listOfRequests;
     private Request[] currRequest;
-    private ArrayList<Request> listOfSentRequests;
 
     FloorSubsystem(int numberOfFloors, Request[] buffer) {
         listOfFloors = new ArrayList<>();
@@ -17,9 +16,7 @@ public class FloorSubsystem implements Runnable {
             listOfFloors.add(new Floor(i+1));
         }
         listOfRequests = readCSV("Input.csv");
-
         currRequest = buffer;
-        listOfSentRequests = new ArrayList<>();
     }
 
     /**
@@ -50,60 +47,10 @@ public class FloorSubsystem implements Runnable {
     }
 
     /**
-     * Checks if the request time is the current time
-     * @param reqTime the time of the request
-     * @param currTime the current clock time
-     * @return if the time is exactly the same or if the currTime has passed the reqTime
+     * Loops through the listOfRequests and checks if they are scheduled for the current time, if so remove the
+     * request from the list and return the request
+     * @return r the request from the input file that has the same time as the current time
      */
-    private boolean checkTime(LocalTime reqTime, LocalTime currTime){
-        int result = reqTime.compareTo(currTime);
-        return result >= 0;
-    }
-
-    /**
-     * Sets shared variable to request to be sent and removes request from list so that the request isn't repeated
-     * @param request the request to check the time of
-     */
-    private synchronized void sendRequest(Request request) {
-        while(currRequest[0] != null){
-            try {
-                wait();
-            } catch (InterruptedException e) {};
-        }
-        currRequest[0] = request;
-        //listOfRequests.remove(request);
-        listOfSentRequests.add(request);
-        System.out.println("Sent request to Scheduler");
-        System.out.println(currRequest[0].toString());
-        notifyAll();
-    }
-
-    /**
-     * Checks each request in the list of requests from the input csv file
-     */
-    private synchronized void checkRequest(){
-        for (Request r : listOfRequests) {
-            boolean requestNow = checkTime(r.getTime(), LocalTime.now());
-            if (requestNow){
-                sendRequest(r);
-            }
-        }
-        notifyAll();
-    }
-
-    private void hardcodedRequests() {
-        listOfRequests = new ArrayList<>();
-        listOfRequests.add(new Request(LocalTime.now(), 2, "Up", 10));
-        listOfRequests.add(new Request(LocalTime.now(), 8, "Down", 2));
-        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
-        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
-        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
-        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
-        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
-        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
-        listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
-    }
-
     private Request currRequest(){
         for (Request r : listOfRequests) {
             if (r.getTime().truncatedTo(ChronoUnit.MINUTES).compareTo(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)) == 0) {
@@ -114,6 +61,9 @@ public class FloorSubsystem implements Runnable {
         return currRequest();
     }
 
+    /**
+     * Assigns the next current request to send to the scheduler and notifies when complete
+     */
     private synchronized void basicFunctionality() {
         if (currRequest[0] == null) {
             Request temp_request = currRequest();
@@ -128,22 +78,8 @@ public class FloorSubsystem implements Runnable {
     }
 
     public void run() {
-        /*
-        System.out.println("Starting Floor Subsystem");
-        while(true){
-            checkRequest();
-            //if (!listOfSentRequests.isEmpty()) {
-                //for (Request r : listOfSentRequests) {
-                //    listOfRequests.remove(r);
-                //}
-            //}
-        }
-
-         */
-        //hardcodedRequests();
         while (true) {
             basicFunctionality();
         }
-
     }
 }

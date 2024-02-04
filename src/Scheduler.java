@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Scheduler implements Runnable {
     private Request[] requestBufferFloor;
     private Request[] requestBufferElevator;
+
     Scheduler(Request[] floorBuffer, Request[] elevatorBuffer) {
         requestBufferFloor = floorBuffer;
         requestBufferElevator = elevatorBuffer;
@@ -21,6 +22,7 @@ public class Scheduler implements Runnable {
         }
         notifyAll();
     }
+
     public void run() {
         System.out.println("Starting Scheduler");
         while (true) {
