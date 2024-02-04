@@ -22,9 +22,11 @@ public class Elevator implements Runnable{
     public void run() {
         System.out.println("Starting Elevator");
         while(true){
-            if (requestBuffer[0] != null){
-                System.out.println("Elevator has received the Request!");
-                handleRequest();
+            synchronized(requestBuffer) {
+                if (requestBuffer[0] != null) {
+                    System.out.println("Elevator has received the Request!");
+                    handleRequest();
+                }
             }
         }
     }
