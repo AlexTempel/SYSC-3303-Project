@@ -7,16 +7,15 @@ public class FloorSubsystem implements Runnable {
 
     private ArrayList<Floor> listOfFloors;
     private ArrayList<Request> listOfRequests;
-    private Request currRequest;
+    private Request[] currRequest;
     private ArrayList<Request> listOfSentRequests;
 
-    FloorSubsystem(int numberOfFloors, Request buffer) {
+    FloorSubsystem(int numberOfFloors, Request[] buffer) {
         listOfFloors = new ArrayList<>();
         for (int i = 0; i < numberOfFloors; i++) {
             listOfFloors.add(new Floor(i+1));
         }
         listOfRequests = readCSV("Input.csv");
-        currRequest = null;
 
         currRequest = buffer;
         listOfSentRequests = new ArrayList<>();
@@ -65,16 +64,16 @@ public class FloorSubsystem implements Runnable {
      * @param request the request to check the time of
      */
     private synchronized void sendRequest(Request request) {
-        while(currRequest != null){
+        while(currRequest[0] != null){
             try {
                 wait();
             } catch (InterruptedException e) {};
         }
-        currRequest = request;
+        currRequest[0] = request;
         //listOfRequests.remove(request);
         listOfSentRequests.add(request);
         System.out.println("Sent request to Scheduler");
-        System.out.println(currRequest.toString());
+        System.out.println(currRequest[0].toString());
         notifyAll();
     }
 

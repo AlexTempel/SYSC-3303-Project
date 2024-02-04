@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class Scheduler implements Runnable {
-    private Request requestBufferFloor;
-    private Request requestBufferElevator;
+    private Request[] requestBufferFloor;
+    private Request[] requestBufferElevator;
     private ArrayList<Request> outstandingRequests;
-    Scheduler(Request floorBuffer, Request elevatorBuffer) {
+    Scheduler(Request[] floorBuffer, Request[] elevatorBuffer) {
         requestBufferFloor = floorBuffer;
         requestBufferElevator = elevatorBuffer;
         outstandingRequests = new ArrayList<>();
@@ -15,8 +15,8 @@ public class Scheduler implements Runnable {
      * @return Request that the floor subsystem is making, or null if there is no current request from floor subsystem
      */
     private synchronized boolean floorRequestCheck() {
-        System.out.println(requestBufferFloor.toString());
-        if (requestBufferFloor != null) {
+        //System.out.println(requestBufferFloor[0].toString());
+        if (requestBufferFloor[0] != null) {
             //Request returnRequest = requestBufferFloor;
             //requestBufferFloor = null;
             notifyAll();
@@ -32,14 +32,14 @@ public class Scheduler implements Runnable {
      * And keeps the request in its list of outstanding requests
      */
     private synchronized void handleFloorRequest() {
-        if (requestBufferFloor != null) {
-            while(!sendRequestElevator(requestBufferFloor)) { //Keep trying to send request to elevator, if it fails (returns false) try again
+        if (requestBufferFloor[0] != null) {
+            while(!sendRequestElevator(requestBufferFloor[0])) { //Keep trying to send request to elevator, if it fails (returns false) try again
                 try {
                     wait();
                 } catch (InterruptedException e) {}
             }
-            outstandingRequests.add(requestBufferFloor);
-            requestBufferFloor = null;
+            outstandingRequests.add(requestBufferFloor[0]);
+            requestBufferFloor[0] = null;
         }
         notifyAll();
     }
@@ -50,8 +50,8 @@ public class Scheduler implements Runnable {
      * @return if sending the request was successful
      */
     private synchronized boolean sendRequestElevator(Request request) {
-        if (request != null && requestBufferElevator == null) {
-            requestBufferElevator = request;
+        if (request != null && requestBufferElevator[0] == null) {
+            requestBufferElevator[0] = request;
             System.out.println("Sent Request to Elevator");
             notifyAll();
             return true;
