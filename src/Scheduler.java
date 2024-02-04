@@ -67,14 +67,29 @@ public class Scheduler implements Runnable {
     private synchronized void checkOutstanding() {
         outstandingRequests.removeIf(Request::getComplete);
     }
+
+    private synchronized void basicFunctionality() {
+        if (requestBufferFloor[0] != null && requestBufferElevator[0] == null) {
+            requestBufferElevator[0] = requestBufferFloor[0];
+            requestBufferFloor[0] = null;
+            System.out.println("Sent to Elevator");
+        }
+        notifyAll();
+    }
     public void run() {
         System.out.println("Starting Scheduler");
+        /*
         while (true) {
             checkOutstanding();
             if (floorRequestCheck()) {
                 System.out.println("Received Request from floor");
                 handleFloorRequest();
             }
+        }
+
+         */
+        while (true) {
+            basicFunctionality();
         }
     }
 }
