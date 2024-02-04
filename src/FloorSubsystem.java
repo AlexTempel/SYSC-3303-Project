@@ -128,7 +128,7 @@ public class FloorSubsystem implements Runnable {
         }
 
          */
-        hardcodedRequests();
+        //hardcodedRequests();
         while (true) {
             basicFunctionality();
         }
