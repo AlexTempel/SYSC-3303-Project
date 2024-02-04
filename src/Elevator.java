@@ -22,6 +22,7 @@ public class Elevator implements Runnable{
     public void run() {
         while(true){
             if (requestBuffer != null){
+                System.out.println("Elevator has received the Request!");
                 handleRequest();
             }
         }
