@@ -20,6 +20,7 @@ public class Elevator implements Runnable{
      * Attempt to complete the request when the buffer is full
      */
     public void run() {
+        System.out.println("Starting Elevator");
         while(true){
             if (requestBuffer != null){
                 System.out.println("Elevator has received the Request!");

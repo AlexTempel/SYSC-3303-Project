@@ -91,6 +91,7 @@ public class FloorSubsystem implements Runnable {
         notifyAll();
     }
     public void run() {
+        System.out.println("Starting Floor Subsystem");
         while(true){
             checkRequest();
             if (!listOfSentRequests.isEmpty()) {

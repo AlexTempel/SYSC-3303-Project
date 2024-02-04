@@ -7,8 +7,12 @@ public class Main {
         Scheduler scheduler = new Scheduler(floorbuffer, elevatorbuffer);
         Elevator elevator = new Elevator(1, elevatorbuffer);
 
-        floorSubsystem.run();
-        scheduler.run();
-        elevator.run();
+        Thread floorThread = new Thread(floorSubsystem);
+        Thread schedulerThread = new Thread(scheduler);
+        Thread elevatorThread = new Thread(elevator);
+
+        floorThread.start();
+        schedulerThread.start();
+        elevatorThread.start();
     }
 }

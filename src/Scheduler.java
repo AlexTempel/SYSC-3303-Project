@@ -15,6 +15,7 @@ public class Scheduler implements Runnable {
      * @return Request that the floor subsystem is making, or null if there is no current request from floor subsystem
      */
     private synchronized boolean floorRequestCheck() {
+        System.out.println(requestBufferFloor.toString());
         if (requestBufferFloor != null) {
             //Request returnRequest = requestBufferFloor;
             //requestBufferFloor = null;
@@ -67,6 +68,7 @@ public class Scheduler implements Runnable {
         outstandingRequests.removeIf(Request::getComplete);
     }
     public void run() {
+        System.out.println("Starting Scheduler");
         while (true) {
             checkOutstanding();
             if (floorRequestCheck()) {
