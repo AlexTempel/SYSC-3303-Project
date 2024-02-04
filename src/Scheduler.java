@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Scheduler implements Runnable {
     private Request[] requestBufferFloor;
     private Request[] requestBufferElevator;
