@@ -5,9 +5,10 @@ Nicholas Kam 101186688
 Peter Willis 101153612
 Nicholas Nemec 101211060
 FloorSubSystem.java, Elevator.java, Scheduler.java; are all threads, they pass request between them
-Rest of the file currently do not have functionality.
-input.CSV becomes parsed and becomes the request that are sent to the elevator
-generate input.py; used to create a new input.CSV that generates random requests
+Rest of the files currently do not have functionality.
+Input.CSV gets parsed and becomes the requests that are sent from the Floor Subsystem to the Scheduler to the elevator
+generate input.py is used to create a new Input.CSV with random requests
+
 sequence of events
 
 1 - floor subsystem reads input csv and creates a list of requests ( in format )
@@ -23,7 +24,7 @@ sequence of events
 6 - scheduler sends confirmation response to floor sub
 7 - floor sub marks successfully fulfilled request, repeat process for next event (@ time)
 
-Files used - input.csv, FloorSubSystem.java, Request.java, input.csv,
+Files used - Input.csv, FloorSubSystem.java, Request.java, input.csv,
              Elevator.java, Scheduler.java, Floor.java, generate input.py
 
 Responsibilities Breakdown:
