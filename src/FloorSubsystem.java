@@ -111,6 +111,9 @@ public class FloorSubsystem implements Runnable {
                 return r;
             }
         }
+        try {
+            Thread.sleep(500);
+        } catch (Exception e) {}
         return currRequest();
     }
 

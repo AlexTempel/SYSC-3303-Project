@@ -17,15 +17,21 @@ with open("Input.csv", 'a') as file:
             rand_second = "0" + rand_second
         
         rand_starting_floor = str(random.randrange(1, 22))
-        if random.random() > 0.5 or rand_starting_floor == "1" and rand_starting_floor != "22":
+        if (random.random() > 0.5 or rand_starting_floor == "1") and rand_starting_floor != "22":
             rand_direction = "Up"
         else:
             rand_direction = "Down"
             
         if rand_direction == "Up":
-            rand_end_floor = str(random.randrange(int(rand_starting_floor), 22))
+            if rand_starting_floor == "21":
+                rand_end_floor = "22"
+            else:
+                rand_end_floor = str(random.randrange(int(rand_starting_floor) + 1, 22))
         else:
-            rand_end_floor = str(random.randrange(1, int(rand_starting_floor )))
+            if rand_starting_floor == "2":
+                rand_end_floor = "1"
+            else:
+                rand_end_floor = str(random.randrange(1, int(rand_starting_floor) - 1))
         
         file.write(rand_hours + ":" + rand_minute + ":" + rand_second + ".0" + " " + rand_starting_floor + " " + rand_direction + " " + rand_end_floor + "\n")
 
