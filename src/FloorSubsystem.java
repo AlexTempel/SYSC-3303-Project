@@ -8,6 +8,7 @@ public class FloorSubsystem implements Runnable {
     private ArrayList<Floor> listOfFloors;
     private ArrayList<Request> listOfRequests;
     private Request currRequest;
+    private ArrayList<Request> listOfSentRequests;
 
     FloorSubsystem(int numberOfFloors, Request buffer) {
         listOfFloors = new ArrayList<>();
@@ -69,14 +70,14 @@ public class FloorSubsystem implements Runnable {
             } catch (InterruptedException e) {};
         }
         currRequest = request;
-        listOfRequests.remove(request);
+        //listOfRequests.remove(request);
+        listOfSentRequests.add(request);
         System.out.println("Sent request to Scheduler");
         notifyAll();
     }
 
     /**
      * Checks each request in the list of requests from the input csv file
-     *
      */
     private synchronized void checkRequest(){
         for (Request r : listOfRequests) {
@@ -90,6 +91,9 @@ public class FloorSubsystem implements Runnable {
     public void run() {
         while(true){
             checkRequest();
+            for (Request r : listOfSentRequests) {
+                listOfRequests.remove(r);
+            }
         }
     }
 }
