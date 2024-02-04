@@ -1,3 +1,4 @@
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -107,9 +108,19 @@ public class FloorSubsystem implements Runnable {
         listOfRequests.add(new Request(LocalTime.now(), 4, "Up", 7));
     }
 
+    private Request currRequest(){
+        for (Request r : listOfRequests) {
+            if (r.getTime().truncatedTo(ChronoUnit.MINUTES) == LocalTime.now().truncatedTo(ChronoUnit.MINUTES)) {
+                return r;
+            }
+        }
+        return currRequest();
+    }
+
     private synchronized void basicFunctionality() {
         if (currRequest[0] == null) {
-            Request temp_request = listOfRequests.removeFirst();
+            Request temp_request = currRequest();
+
             if (temp_request != null) {
                 currRequest[0] = temp_request;
                 System.out.println("Sent to Scheduler");
