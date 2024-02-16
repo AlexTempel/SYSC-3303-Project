@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.time.LocalTime;
 
 public class FloorSubsystem implements Runnable {
-
     private ArrayList<Floor> listOfFloors;
     private ArrayList<Request> listOfRequests;
     private Request[] currRequest;
